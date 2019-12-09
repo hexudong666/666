@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hexudong.mapper.BookMapper">
+
+	<select id="getList" resultType="com.hexudong.entity.Book">
+		select a.*,GROUP_CONCAT(b.tname) lx from Book a LEFT JOIN type b on a.tid=b.tid
+			 <where>
+				<if test="mhname!=null and mhname!=''">
+					and bname like '%${mhname}%'
+				</if>
+			</where> 
+		GROUP BY a.bname ORDER BY hy DESC
+	</select>
+
+	<select id="getSX" resultType="com.hexudong.entity.Book">
+		select a.*,GROUP_CONCAT(b.tname) lx from Book a LEFT JOIN type b on a.tid=b.tid
+			 <where>
+				<if test="mhname!=null and mhname!=''">
+					and bname like '%${mhname}%'
+				</if>
+			</where> 
+		GROUP BY a.bname ORDER BY hy ASC		
+		
+	</select>
+
+
+	<update id="xg">
+		update book set sjh=#{sjh},hy=#{hy} where bid=#{bid}
+	</update>
+
+</mapper>
